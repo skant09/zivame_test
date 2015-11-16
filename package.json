@@ -1,0 +1,23 @@
+{
+  "name": "Zivame",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "dependencies": {
+    "babel-core": "^6.1.21",
+    "babel-preset-es2015": "^6.1.18",
+    "es6-module-loader": "^0.17.8",
+    "express": "^4.13.3",
+    "express-handlebars": "^2.0.1"
+  },
+  "dev-dependencies": {},
+  "contributors": [
+    {
+      "name": "suryakant",
+      "email": "surya@zivame.com>"
+    }
+  ],
+  "main": "app.js"
+}
