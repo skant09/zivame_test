@@ -1,8 +1,11 @@
 'use strict';
 
+import fs from 'fs';
+import path from 'path';
 import del from 'del';
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
+import server from 'gulp-develop-server';
 import runSequence from 'run-sequence';
 
 const gulpPlugins = gulpLoadPlugins();
@@ -53,14 +56,18 @@ gulp.task('scripts', () =>
 );
 
 // Build production files, the default task
-gulp.task('default', ['clean'], cb =>
-  runSequence('scripts', 'copy', cb)
-);
-
-gulp.task('serve',['default'], cb => {
-	gulpPlugins.exec('node lib/app.js', function (err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
-    cb(err);
-  });
+gulp.task('default', ['clean'], cb => {
+	runSequence('scripts', 'copy', cb);
 });
+
+// Rerun the task when a file changes
+gulp.task('watch', ['default'], function() {
+  	gulp.watch('src/**/*', ['default']);
+  	// listen for changes
+	gulpPlugins.livereload.listen();
+	// configure nodemon
+	server.listen({path: './build/app.js' }, gulpPlugins.livereload.listen());
+});
+
+
+gulp.task('serve',['watch','default']);
