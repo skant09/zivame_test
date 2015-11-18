@@ -1,0 +1,10 @@
+'use strict';
+
+function routes(app) {
+	app.get('/*', function (req, res, next) {
+		res.render('sample');
+	});
+};
+
+module.exports = routes;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJvdXRlcy5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLFNBQVMsTUFBTSxDQUFDLEdBQUcsRUFBQztBQUNuQixJQUFHLENBQUMsR0FBRyxDQUFDLElBQUksRUFBQyxVQUFTLEdBQUcsRUFBQyxHQUFHLEVBQUMsSUFBSSxFQUFDO0FBQ2xDLEtBQUcsQ0FBQyxNQUFNLENBQUMsUUFBUSxDQUFDLENBQUM7RUFDckIsQ0FBQyxDQUFDO0NBQ0gsQ0FBQzs7QUFFRixNQUFNLENBQUMsT0FBTyxHQUFHLE1BQU0sQ0FBQyIsImZpbGUiOiJyb3V0ZXMuanMiLCJzb3VyY2VzQ29udGVudCI6WyJmdW5jdGlvbiByb3V0ZXMoYXBwKXtcblx0YXBwLmdldCgnLyonLGZ1bmN0aW9uKHJlcSxyZXMsbmV4dCl7XG5cdFx0cmVzLnJlbmRlcignc2FtcGxlJyk7XG5cdH0pO1xufTtcblxubW9kdWxlLmV4cG9ydHMgPSByb3V0ZXM7XG4iXSwic291cmNlUm9vdCI6Ii9zb3VyY2UvIn0=

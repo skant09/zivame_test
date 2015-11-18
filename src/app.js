@@ -3,7 +3,7 @@ let System = loader.System;
 System.transpiler = 'babel';
 
 var express = require('express');
-let hbs = System.import('express-handlebars');
+import hbs from 'express-handlebars';
 
 
 var app = express();
