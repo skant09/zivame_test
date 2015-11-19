@@ -1,7 +1,7 @@
 //sdfsdfsdf
 var express = require('express');
 import hbs from 'express-handlebars';
-
+import path from 'path';
 
 var app = express();
 var routes = require('./routes')(app);
@@ -14,6 +14,9 @@ app.engine('hbs', hbs({
 app.set('view engine', 'hbs');
 
 app.set('views', __dirname+'/views');
+
+console.log(__dirname);
+app.use('/app',express.static(path.join(__dirname, '/assets')));
 
 //Setting up port and starting express server
 app.set('port', 3000);
