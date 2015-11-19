@@ -7,6 +7,7 @@ import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import server from 'gulp-develop-server';
 import runSequence from 'run-sequence';
+var Server = require('karma').Server;
 
 const gulpPlugins = gulpLoadPlugins();
 
@@ -77,6 +78,13 @@ gulp.task('scripts', () =>
 	.pipe(gulpPlugins.sourcemaps.write('.'))
 	.pipe(gulp.dest('./build'))
 );
+
+gulp.task('test', function (done) {
+  new Server({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
+});
 
 // Build production files, the default task
 gulp.task('default', ['clean'], cb => {

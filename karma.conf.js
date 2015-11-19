@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Thu Nov 19 2015 16:28:43 GMT+0530 (IST)
+// Generated on Thu Nov 19 2015 19:30:47 GMT+0530 (IST)
 
 module.exports = function(config) {
   config.set({
@@ -10,12 +10,13 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'requirejs'],
+    frameworks: ['mocha'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      {pattern: './src/*.js ./test/*.spec.js', included: false}
+      'src/*.js',
+      'test/*.spec.js'
     ],
 
 
@@ -27,8 +28,22 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+    	'src/**/*.js': ['babel'],
+      'test/**/*spec.js': ['babel']
     },
 
+    babelPreprocessor: {
+      options: {
+        presets: ['es2015'],
+        sourceMap: 'inline'
+      },
+      filename: function (file) {
+        return file.originalPath.replace(/\.js$/, '.es5.js');
+      },
+      sourceFileName: function (file) {
+        return file.originalPath;
+      }
+    },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
@@ -64,6 +79,8 @@ module.exports = function(config) {
 
     // Concurrency level
     // how many browser should be started simultanous
-    concurrency: Infinity
+    concurrency: Infinity,
+
+    plugins : ['karma-mocha', 'karma-phantomjs-launcher', 'karma-babel-preprocessor']
   })
 }

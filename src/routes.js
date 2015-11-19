@@ -10,7 +10,4 @@ function routes(app){
 	});
 };
 
-console.log(__dirname);
-app.use('/app',express.static(path.join(__dirname, '/assets')));
-
 module.exports = routes;

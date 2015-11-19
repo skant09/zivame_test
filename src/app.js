@@ -1,4 +1,3 @@
-//sdfsdfsdf
 var express = require('express');
 import hbs from 'express-handlebars';
 import path from 'path';
