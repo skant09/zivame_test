@@ -30,7 +30,7 @@ gulp.task('copy', () =>
 		'./src/**/*',
 		'!./src/*.js',
 		'!./src/**/*.js',
-		'!./src/assets/sass',
+		'!./src/assets/sass/*',
 		'!./src/**/*.scss'
 	], {
 		dot: true
