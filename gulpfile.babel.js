@@ -24,25 +24,30 @@ gulp.task('clean', cb => del(['.tmp', './build'], {
 
 
 // Copy all files at the root level (app)
-gulp.task('copy', () =>
+gulp.task('copy', () => {
 	gulp.src([
 		'./src/*',
 		'./src/**/*',
 		'!./src/*.js',
 		'!./src/**/*.js',
-		'!./src/assets/sass/*',
-		'!./src/**/*.scss'
+		'!./src/**/*.scss',
+		'!.src/component/**/*.hbs'
 	], {
-		dot: true
+		dot: false
 	}).pipe(gulp.dest('./build'))
 	.pipe(gulpPlugins.size({
 		title: 'copy'
 	}))
-);
+
+	gulp.src([
+		'.src/public/component/**/*.hbs'
+	],{dat: false})
+	.pipe(gulp.dest('./build/public/component/views'));
+});
 
 
 gulp.task('sass', function() {
-	gulp.src('./src/assets/sass/*.scss')
+	gulp.src('./src/public/assets/sass/*.scss')
 		.pipe(gulpPlugins.sass().on('error', gulpPlugins.sass.logError))
 		.pipe(gulpPlugins.sourcemaps.init())
 		.pipe(gulpPlugins.autoprefixer({
@@ -51,7 +56,7 @@ gulp.task('sass', function() {
     		}))
 		.pipe(gulpPlugins.minifyCss({compatibility: 'ie8'}))
 		.pipe(gulpPlugins.sourcemaps.write())
-		.pipe(gulp.dest('./build/assets/css'));
+		.pipe(gulp.dest('./build/public/assets/css'));
 });
 
 // Concatenate and minify JavaScript. Optionally transpiles ES2015 code to ES5.
@@ -78,6 +83,16 @@ gulp.task('scripts', () =>
 	.pipe(gulpPlugins.sourcemaps.write('.'))
 	.pipe(gulp.dest('./build'))
 );
+
+gulp.task('webpack', () =>
+	gulp.src([
+		'./src/scripts/components/app.js'
+	])
+	.pipe(gulpPlugins.babel())
+	.pipe(gulpPlugins.react())
+	.pipe(gulpPlugins.webpack())
+	.pipe(gulp.dest('./build'))
+)
 
 gulp.task('test', function (done) {
   new Server({

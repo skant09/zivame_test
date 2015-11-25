@@ -6,15 +6,16 @@ var app = express();
 
 //set view-engine
 app.engine('hbs', hbs({
+	extname:'hbs',
 	contentHelperName: 'content',
-	defaultLayout: __dirname + '/views/index.hbs'
+	defaultLayout: __dirname + '/public/component/index.hbs'
 }));
 
 app.set('view engine', 'hbs');
 
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/public/component');
 
-app.use('/static', express.static(__dirname + '/assets'));
+app.use('/public', express.static(__dirname + '/public'));
 
 var routes = require('./routes')(app);
 //Setting up port and starting express server
