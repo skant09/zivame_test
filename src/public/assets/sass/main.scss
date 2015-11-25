@@ -35,3 +35,21 @@ header{
     font-size: 1rem;
   }
 }
+.main-banner{
+  > a {
+    > img{
+      width: 100%;
+    }
+  }
+}
+.main-section{
+  ul {
+    list-style-type: none;
+    > li {
+      min-width: 200px;
+      width: 45%;
+      float: left;
+      display: table-cell;
+    }
+  }
+}

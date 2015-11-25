@@ -66,6 +66,9 @@ gulp.task('scripts', () =>
 	gulp.src([
 		'./src/*.js'
 	])
+	.pipe(gulpPlugins.eslint())
+	.pipe(gulpPlugins.eslint.format())
+	.pipe(gulpPlugins.eslint.failAfterError())
 	.pipe(gulpPlugins.newer('.tmp/scripts'))
 	.pipe(gulpPlugins.sourcemaps.init())
 	.pipe(gulpPlugins.babel())
