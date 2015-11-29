@@ -1,6 +1,6 @@
 function routes(app) {
   app.get('/*', (req, res)=>{
-    res.render('home/sample', {
+    res.render('sample', {
       pageTitle: 'Zivame',
       assets: {
         css: ['main'],

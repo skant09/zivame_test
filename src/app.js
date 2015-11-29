@@ -1,25 +1,24 @@
 const express = require('express');
 import hbs from 'express-handlebars';
-// import path from 'path';
-// import widget from './public/common/widget';
 const app = express();
 const routes = require('./routes');
-routes(app);
+
 
 //	set view-engine
 app.engine('hbs', hbs({
   extname: 'hbs',
   contentHelperName: 'content',
-  defaultLayout: __dirname + '/public/component/index.hbs'
+  defaultLayout: __dirname + '/views/index.hbs'
 }));
 
 app.set('view engine', 'hbs');
 
-app.set('views', __dirname + '/public/component');
+app.set('views', __dirname + '/views');
 
 app.use('/public', express.static(__dirname + '/public'));
 
-
+//  set the default route at the last
+routes(app);
 //	Setting up port and starting express server
 app.set('port', 3000);
 

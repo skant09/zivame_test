@@ -54,7 +54,7 @@ gulp.task('sass', function() {
             	browsers: ['last 2 versions'],
             	cascade: false
     		}))
-		.pipe(gulpPlugins.minifyCss({compatibility: 'ie8'}))
+		// .pipe(gulpPlugins.minifyCss({compatibility: 'ie8'}))
 		.pipe(gulpPlugins.sourcemaps.write())
 		.pipe(gulp.dest('./build/public/assets/css'));
 });
@@ -62,7 +62,32 @@ gulp.task('sass', function() {
 // Concatenate and minify JavaScript. Optionally transpiles ES2015 code to ES5.
 // to enables ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
 // `.babelrc` file.
-gulp.task('scripts', () =>
+gulp.task('publicScripts', () =>
+	gulp.src([
+		'./src/public/assets/**/*.js'
+	])
+	.pipe(gulpPlugins.eslint())
+	.pipe(gulpPlugins.eslint.format())
+	.pipe(gulpPlugins.eslint.failAfterError())
+	.pipe(gulpPlugins.newer('.tmp/scripts'))
+	.pipe(gulpPlugins.sourcemaps.init())
+	.pipe(gulpPlugins.babel())
+	.pipe(gulpPlugins.sourcemaps.write())
+	.pipe(gulp.dest('.tmp/scripts'))
+	//remove the following lines to disable minification
+	//for develoment enviornment
+	.pipe(gulpPlugins.uglify({
+		preserveComments: 'some'
+	}))
+	// Output files
+	.pipe(gulpPlugins.size({
+		title: 'scripts'
+	}))
+	.pipe(gulpPlugins.sourcemaps.write('.'))
+	.pipe(gulp.dest('./build/public/assets'))
+);
+
+gulp.task('nodeScripts', () =>
 	gulp.src([
 		'./src/*.js'
 	])
@@ -86,6 +111,8 @@ gulp.task('scripts', () =>
 	.pipe(gulpPlugins.sourcemaps.write('.'))
 	.pipe(gulp.dest('./build'))
 );
+
+gulp.task('scripts', cb => runSequence('nodeScripts','publicScripts',cb));
 
 gulp.task('webpack', () =>
 	gulp.src([
