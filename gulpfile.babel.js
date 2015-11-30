@@ -11,7 +11,6 @@ var Server = require('karma').Server;
 
 const gulpPlugins = gulpLoadPlugins();
 
-
 let appConfig = {
 	src: './src',
 	dest: './build'
