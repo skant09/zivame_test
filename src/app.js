@@ -16,6 +16,7 @@ app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
 
 app.use('/public', express.static(__dirname + '/public'));
+app.use('/node_modules', express.static('../../node_modules'));
 
 //  set the default route at the last
 routes(app);
