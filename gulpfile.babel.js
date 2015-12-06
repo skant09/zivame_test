@@ -45,10 +45,10 @@ gulp.task('copy', () => {
 
 gulp.task('sass', function() {
   gulp.src([
-    './src/public/assets/sass/*.scss',
-    './src/public/lib/**/*.css'
+      './src/public/assets/sass/*.scss',
+      './src/public/lib/**/*.css'
 
-  ])
+    ])
     .pipe(gulpPlugins.sass().on('error', gulpPlugins.sass.logError))
     .pipe(gulpPlugins.sourcemaps.init())
     .pipe(gulpPlugins.autoprefixer({
@@ -68,14 +68,35 @@ gulp.task('sass', function() {
 // Concatenate and minify JavaScript. Optionally transpiles ES2015 code to ES5.
 // to enables ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
 // `.babelrc` file.
+gulp.task('lint', () => {
+  // ESLint ignores files with "node_modules" paths.
+  // So, it's best to have gulp ignore the directory as well.
+  // Also, Be sure to return the stream from the task;
+  // Otherwise, the task may end before the stream has finished.
+  return gulp.src([
+      './src/**/*.js',
+      '!src/public/assets/js/main.js',
+      '!src/public/assets/js/home.js',
+      '!src/public/assets/js/require.js',
+      '!node_modules/**',
+      '!src/public/lib/**'
+    ])
+    // eslint() attaches the lint output to the "eslint" property
+    // of the file object so it can be used by other modules.
+    .pipe(gulpPlugins.eslint())
+    // eslint.format() outputs the lint results to the console.
+    // Alternatively use eslint.formatEach() (see Docs).
+    .pipe(gulpPlugins.eslint.format())
+    // To have the process exit with an error code (1) on
+    // lint error, return the stream and pipe to failAfterError last.
+    .pipe(gulpPlugins.eslint.failOnError());
+});
+
 gulp.task('publicScripts', () =>
   gulp.src([
     './src/public/assets/**/*.js',
-    './src/public/lib/**/*.js'
+    './src/public/lib/**/*.js',
   ])
-  // .pipe(gulpPlugins.eslint())
-  // .pipe(gulpPlugins.eslint.format())
-  // .pipe(gulpPlugins.eslint.failAfterError())
   .pipe(gulpPlugins.newer('.tmp/scripts'))
   .pipe(gulpPlugins.sourcemaps.init())
   .pipe(gulpPlugins.babel({
@@ -123,44 +144,21 @@ gulp.task('nodeScripts', () =>
   .pipe(gulp.dest('./build'))
 );
 
-gulp.task('scripts', cb => runSequence('nodeScripts', 'publicScripts', cb));
-
-gulp.task('webpack', () =>
-  gulp.src([
-    './src/public/assets/js/home.js',
-  ])
-  .pipe(gulpPlugins.babel())
-  .pipe(gulpPlugins.webpack({
-    context: __dirname + "/src/public/assets",
-    entry: {
-      scripts: './js/home.js'
-    },
-    loader: [{
-      test: /\.js$/,
-      loader: "babel",
-      query: {
-        presets: ['es2015']
-      }
-    }],
-    output: {
-      // filename: './build/public/assets/js/bundle.js'
-      filename: 'bundle.js'
-    },
-  }))
-  // .pipe(gulp.dest('./build/public/assets'))
-)
+gulp.task('scripts', ['lint'], cb => runSequence('nodeScripts', 'publicScripts', cb));
 
 // Build production files, the default task
 gulp.task('default', ['clean'], cb => {
-  runSequence('scripts', 'webpack', 'sass', 'copy', cb);
+  runSequence('scripts', 'sass', 'copy', cb);
 });
 
 // Rerun the task when a file changes
 gulp.task('watch', ['default'], function() {
-  gulp.watch('src/**/*', ['default']);
+  gulp.watch('src/**/*.js', ['scripts']);
+  gulp.watch('src/**/*.scss', ['sass']);
+  gulp.watch('src/**/*.hbs', ['copy']);
   // listen for changes
   gulpPlugins.livereload.listen();
-  gulp.watch('./src/*', ['default']);
+  // gulp.watch('./src/*', ['default']);
   // configure nodemon
   server.listen({
     path: './build/app.js'

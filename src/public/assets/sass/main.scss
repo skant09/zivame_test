@@ -1,15 +1,21 @@
 @import 'node_modules/foundation-sites/scss/normalize';
 @import 'node_modules/foundation-sites/scss/foundation';
 html {
-  @media screen and (max-width: 300px) {
+  @media screen and (max-width: 640px) {
     font-size: 16px;
   }
-  @media screen and (min-width:300px) and (max-width: 600px) {
+  @media screen and (min-width:641px) and (max-width: 1024px) {
     font-size: 20px;
   }
-  @media screen and (min-width:600px) {
+  @media screen and (min-width:1025px) {
     font-size: 24px;
   }
+}
+body {
+  font-family: DroidSans sans-serif;
+}
+.row .row {
+  max-width: 100%;
 }
 .zivlogo {
   display: block;
@@ -19,42 +25,15 @@ html {
   height: 49px;
 }
 header {
-  &.top-offer {
-    background-image: url(http://cdn.zivame.mobi/media/wysiwyg/home_new/persistant_bg_2.png);
-    width: 100%;
-    color: #fff;
-    padding: 0.6rem;
-    border-bottom: 1px dashed #ccc;
-    display: table;
-    div {
-      font-size: 0.6rem;
-      text-align: center;
-      margin: auto;
-      padding: 0.2rem;
-      line-height: 1rem;
-      display: table-cell;
-      vertical-align: middle;
-      span {
-        margin: auto 0;
-      }
-      button {
-        border-radius: 2px;
-        margin: auto 0;
-      }
-    }
-  }
-  &.top {
-    background: linear-gradient(to bottom, #fff 0%, #e9e9e9 100%);
-    width: 100%;
-    max-width: 100%;
-    color: #fff;
-    margin: 0;
-    text-align: center;
-    border-bottom: 1px dashed #ccc;
-    a {
-      line-height: 43px;
-      margin-left: 10%;
-    }
+  background: linear-gradient(to bottom,color-stop(0,#fbfbfb),color-stop(1,#eee));
+  height: 50px;
+  border-bottom: 1px solid #ebebeb;
+  a {
+    width: 124px;
+    height: 38px;
+    background: url(http://cdn.zivame.com/mobile/assets/images/logo.svg);
+    background-size: 124px 38px;
+    margin: 6px 0 0 10px;
   }
 }
 .main-banner {
@@ -83,12 +62,46 @@ header {
   }
 }
 footer {
-  background: #191919;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  >div#footer-inner {
-    font-family: 'Droid Sans';
-    font-size: 0.8rem;
+  background: url(http://cdn.zivame.com/skin/frontend/base/theme049/images/customproduct/pro_bg.jpg);
+  height: 3.5rem;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  padding: 10px;
+  font-size: 0;
+  a {
+    float: left;
+    color: #333;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    padding-top: 30px;
+    text-align: center;
+    &.home {
+      background: url(http://cdn.zivame.com/mobile/assets/images/store_active.svg) no-repeat;
+      background-size: 20px 20px;
+      cursor: pointer;
+      background-position: 50% 15%;
+    }
+    &.brands {
+      background: url(http://cdn.zivame.com/mobile/assets/images/brands.svg) no-repeat;
+      background-size: 20px 20px;
+      cursor: pointer;
+      background-position: 50% 15%;
+    }
+    &.offers {
+      background: url(http://cdn.zivame.com/mobile/assets/images/offers.svg) no-repeat;
+      background-size: 20px 20px;
+      cursor: pointer;
+      background-position: 50% 15%;
+    }
+    &.carts {
+      background: url(http://cdn.zivame.com/mobile/assets/images/cart.svg) no-repeat;
+      background-size: 20px 20px;
+      cursor: pointer;
+      background-position: 50% 15%;
+    }
   }
 }
 .accordion {
@@ -103,8 +116,8 @@ footer {
       font-size: 1rem;
       color: #666;
       padding: 0.2rem;
-      @media screen and (max-width: 720px){
-          border-top: 1px solid #999;
+      @media screen and (max-width: 720px) {
+        border-top: 1px solid #999;
       }
       &:hover {
         background: none;
@@ -123,7 +136,7 @@ footer {
     }
   }
 }
-@media screen and (max-width:600px) {
+@media screen and (max-width:640px) {
   #keepInTouch {
     display: none;
   }
